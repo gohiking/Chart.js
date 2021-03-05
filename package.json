@@ -1,5 +1,5 @@
 {
-  "name": "@hiking/chart.js",
+  "name": "chart.js",
   "homepage": "https://www.chartjs.org",
   "description": "Simple HTML5 charts using the canvas element.",
   "version": "2.9.4",
