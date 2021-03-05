@@ -108,7 +108,7 @@ function getPixelForGridLine(scale, index, offsetGridLines) {
 }
 
 function garbageCollect(caches, length) {
-	helpers.each(caches, function(cache) {
+	helpers.each(caches, function (cache) {
 		var gc = cache.gc;
 		var gcLen = gc.length / 2;
 		var i;
@@ -138,7 +138,7 @@ function computeLabelSizes(ctx, tickFonts, ticks, caches) {
 		label = ticks[i].label;
 		tickFont = ticks[i].major ? tickFonts.major : tickFonts.minor;
 		ctx.font = fontString = tickFont.string;
-		cache = caches[fontString] = caches[fontString] || {data: {}, gc: []};
+		cache = caches[fontString] = caches[fontString] || { data: {}, gc: [] };
 		lineHeight = tickFont.lineHeight;
 		width = height = 0;
 		// Undefined labels and arrays should not be measured
@@ -215,7 +215,7 @@ function parseTickFontOptions(options) {
 	var minor = parseFontOptions(options, options.minor);
 	var major = options.major.enabled ? parseFontOptions(options, options.major) : minor;
 
-	return {minor: minor, major: major};
+	return { minor: minor, major: major };
 }
 
 function nonSkipped(ticksToFilter) {
@@ -337,7 +337,7 @@ var Scale = Element.extend({
 	 * @private
 	 * @returns {Padding} the necessary padding
 	 */
-	getPadding: function() {
+	getPadding: function () {
 		var me = this;
 		return {
 			left: me.paddingLeft || 0,
@@ -351,14 +351,14 @@ var Scale = Element.extend({
 	 * Returns the scale tick objects ({label, major})
 	 * @since 2.7
 	 */
-	getTicks: function() {
+	getTicks: function () {
 		return this._ticks;
 	},
 
 	/**
 	* @private
 	*/
-	_getLabels: function() {
+	_getLabels: function () {
 		var data = this.chart.data;
 		return this.options.labels || (this.isHorizontal() ? data.xLabels : data.yLabels) || data.labels || [];
 	},
@@ -373,11 +373,11 @@ var Scale = Element.extend({
 	 * @deprecated since version 2.8.0
 	 * @todo remove at version 3
 	 */
-	mergeTicksOptions: function() {
+	mergeTicksOptions: function () {
 		// noop
 	},
 
-	beforeUpdate: function() {
+	beforeUpdate: function () {
 		helpers.callback(this.options.beforeUpdate, [this]);
 	},
 
@@ -389,7 +389,7 @@ var Scale = Element.extend({
 	 *     - padding - space that's required to show the labels at the edges of the scale
 	 *     - thickness of scales or legends in another orientation
 	 */
-	update: function(maxWidth, maxHeight, margins) {
+	update: function (maxWidth, maxHeight, margins) {
 		var me = this;
 		var tickOpts = me.options.ticks;
 		var sampleSize = tickOpts.sampleSize;
@@ -498,7 +498,7 @@ var Scale = Element.extend({
 	/**
 	 * @private
 	 */
-	_configure: function() {
+	_configure: function () {
 		var me = this;
 		var reversePixels = me.options.ticks.reverse;
 		var startPixel, endPixel;
@@ -518,16 +518,16 @@ var Scale = Element.extend({
 		me._length = endPixel - startPixel;
 	},
 
-	afterUpdate: function() {
+	afterUpdate: function () {
 		helpers.callback(this.options.afterUpdate, [this]);
 	},
 
 	//
 
-	beforeSetDimensions: function() {
+	beforeSetDimensions: function () {
 		helpers.callback(this.options.beforeSetDimensions, [this]);
 	},
-	setDimensions: function() {
+	setDimensions: function () {
 		var me = this;
 		// Set the unconstrained dimension before label rotation
 		if (me.isHorizontal()) {
@@ -549,25 +549,25 @@ var Scale = Element.extend({
 		me.paddingRight = 0;
 		me.paddingBottom = 0;
 	},
-	afterSetDimensions: function() {
+	afterSetDimensions: function () {
 		helpers.callback(this.options.afterSetDimensions, [this]);
 	},
 
 	// Data limits
-	beforeDataLimits: function() {
+	beforeDataLimits: function () {
 		helpers.callback(this.options.beforeDataLimits, [this]);
 	},
 	determineDataLimits: helpers.noop,
-	afterDataLimits: function() {
+	afterDataLimits: function () {
 		helpers.callback(this.options.afterDataLimits, [this]);
 	},
 
 	//
-	beforeBuildTicks: function() {
+	beforeBuildTicks: function () {
 		helpers.callback(this.options.beforeBuildTicks, [this]);
 	},
 	buildTicks: helpers.noop,
-	afterBuildTicks: function(ticks) {
+	afterBuildTicks: function (ticks) {
 		var me = this;
 		// ticks is empty for old axis implementations here
 		if (isArray(ticks) && ticks.length) {
@@ -578,25 +578,25 @@ var Scale = Element.extend({
 		return ticks;
 	},
 
-	beforeTickToLabelConversion: function() {
+	beforeTickToLabelConversion: function () {
 		helpers.callback(this.options.beforeTickToLabelConversion, [this]);
 	},
-	convertTicksToLabels: function() {
+	convertTicksToLabels: function () {
 		var me = this;
 		// Convert ticks to strings
 		var tickOpts = me.options.ticks;
 		me.ticks = me.ticks.map(tickOpts.userCallback || tickOpts.callback, this);
 	},
-	afterTickToLabelConversion: function() {
+	afterTickToLabelConversion: function () {
 		helpers.callback(this.options.afterTickToLabelConversion, [this]);
 	},
 
 	//
 
-	beforeCalculateTickRotation: function() {
+	beforeCalculateTickRotation: function () {
 		helpers.callback(this.options.beforeCalculateTickRotation, [this]);
 	},
-	calculateTickRotation: function() {
+	calculateTickRotation: function () {
 		var me = this;
 		var options = me.options;
 		var tickOpts = options.ticks;
@@ -635,16 +635,16 @@ var Scale = Element.extend({
 
 		me.labelRotation = labelRotation;
 	},
-	afterCalculateTickRotation: function() {
+	afterCalculateTickRotation: function () {
 		helpers.callback(this.options.afterCalculateTickRotation, [this]);
 	},
 
 	//
 
-	beforeFit: function() {
+	beforeFit: function () {
 		helpers.callback(this.options.beforeFit, [this]);
 	},
-	fit: function() {
+	fit: function () {
 		var me = this;
 		// Reset
 		var minSize = me.minSize = {
@@ -751,7 +751,7 @@ var Scale = Element.extend({
 	 * Handle margins and padding interactions
 	 * @private
 	 */
-	handleMargins: function() {
+	handleMargins: function () {
 		var me = this;
 		if (me.margins) {
 			me.margins.left = Math.max(me.paddingLeft, me.margins.left);
@@ -761,21 +761,21 @@ var Scale = Element.extend({
 		}
 	},
 
-	afterFit: function() {
+	afterFit: function () {
 		helpers.callback(this.options.afterFit, [this]);
 	},
 
 	// Shared Methods
-	isHorizontal: function() {
+	isHorizontal: function () {
 		var pos = this.options.position;
 		return pos === 'top' || pos === 'bottom';
 	},
-	isFullWidth: function() {
+	isFullWidth: function () {
 		return this.options.fullWidth;
 	},
 
 	// Get the correct value. NaN bad inputs, If the value type is object get the x or y based on whether we are horizontal or not
-	getRightValue: function(rawValue) {
+	getRightValue: function (rawValue) {
 		// Null and undefined values first
 		if (isNullOrUndef(rawValue)) {
 			return NaN;
@@ -800,11 +800,11 @@ var Scale = Element.extend({
 		return rawValue;
 	},
 
-	_convertTicksToLabels: function(ticks) {
+	_convertTicksToLabels: function (ticks) {
 		var me = this;
 		var labels, i, ilen;
 
-		me.ticks = ticks.map(function(tick) {
+		me.ticks = ticks.map(function (tick) {
 			return tick.value;
 		});
 
@@ -828,7 +828,7 @@ var Scale = Element.extend({
 	/**
 	 * @private
 	 */
-	_getLabelSizes: function() {
+	_getLabelSizes: function () {
 		var me = this;
 		var labelSizes = me._labelSizes;
 
@@ -843,7 +843,7 @@ var Scale = Element.extend({
 	/**
 	 * @private
 	 */
-	_parseValue: function(value) {
+	_parseValue: function (value) {
 		var start, end, min, max;
 
 		if (isArray(value)) {
@@ -870,7 +870,7 @@ var Scale = Element.extend({
 	/**
 	* @private
 	*/
-	_getScaleLabel: function(rawValue) {
+	_getScaleLabel: function (rawValue) {
 		var v = this._parseValue(rawValue);
 		if (v.start !== undefined) {
 			return '[' + v.start + ', ' + v.end + ']';
@@ -906,7 +906,7 @@ var Scale = Element.extend({
 	 * Returns the location of the tick at the given index
 	 * The coordinate (0, 0) is at the upper-left corner of the canvas
 	 */
-	getPixelForTick: function(index) {
+	getPixelForTick: function (index) {
 		var me = this;
 		var offset = me.options.offset;
 		var numTicks = me._ticks.length;
@@ -921,7 +921,7 @@ var Scale = Element.extend({
 	 * Utility for getting the pixel location of a percentage of scale
 	 * The coordinate (0, 0) is at the upper-left corner of the canvas
 	 */
-	getPixelForDecimal: function(decimal) {
+	getPixelForDecimal: function (decimal) {
 		var me = this;
 
 		if (me._reversePixels) {
@@ -931,7 +931,7 @@ var Scale = Element.extend({
 		return me._startPixel + decimal * me._length;
 	},
 
-	getDecimalForPixel: function(pixel) {
+	getDecimalForPixel: function (pixel) {
 		var decimal = (pixel - this._startPixel) / this._length;
 		return this._reversePixels ? 1 - decimal : decimal;
 	},
@@ -940,26 +940,26 @@ var Scale = Element.extend({
 	 * Returns the pixel for the minimum chart value
 	 * The coordinate (0, 0) is at the upper-left corner of the canvas
 	 */
-	getBasePixel: function() {
+	getBasePixel: function () {
 		return this.getPixelForValue(this.getBaseValue());
 	},
 
-	getBaseValue: function() {
+	getBaseValue: function () {
 		var me = this;
 		var min = me.min;
 		var max = me.max;
 
 		return me.beginAtZero ? 0 :
 			min < 0 && max < 0 ? max :
-			min > 0 && max > 0 ? min :
-			0;
+				min > 0 && max > 0 ? min :
+					0;
 	},
 
 	/**
 	 * Returns a subset of ticks to be plotted to avoid overlapping labels.
 	 * @private
 	 */
-	_autoSkip: function(ticks) {
+	_autoSkip: function (ticks) {
 		var me = this;
 		var tickOpts = me.options.ticks;
 		var axisLength = me._length;
@@ -994,7 +994,7 @@ var Scale = Element.extend({
 	/**
 	 * @private
 	 */
-	_tickSize: function() {
+	_tickSize: function () {
 		var me = this;
 		var optionTicks = me.options.ticks;
 
@@ -1017,7 +1017,7 @@ var Scale = Element.extend({
 	/**
 	 * @private
 	 */
-	_isVisible: function() {
+	_isVisible: function () {
 		var me = this;
 		var chart = me.chart;
 		var display = me.options.display;
@@ -1043,7 +1043,7 @@ var Scale = Element.extend({
 	/**
 	 * @private
 	 */
-	_computeGridLineItems: function(chartArea) {
+	_computeGridLineItems: function (chartArea) {
 		var me = this;
 		var chart = me.chart;
 		var options = me.options;
@@ -1059,7 +1059,7 @@ var Scale = Element.extend({
 		var axisWidth = gridLines.drawBorder ? valueAtIndexOrDefault(gridLines.lineWidth, 0, 0) : 0;
 		var axisHalfWidth = axisWidth / 2;
 		var alignPixel = helpers._alignPixel;
-		var alignBorderValue = function(pixel) {
+		var alignBorderValue = function (pixel) {
 			return alignPixel(chart, pixel, axisWidth);
 		};
 		var borderValue, i, tick, lineValue, alignedLineValue;
@@ -1152,7 +1152,7 @@ var Scale = Element.extend({
 	/**
 	 * @private
 	 */
-	_computeLabelItems: function() {
+	_computeLabelItems: function () {
 		var me = this;
 		var options = me.options;
 		var optionTicks = options.ticks;
@@ -1222,7 +1222,7 @@ var Scale = Element.extend({
 	/**
 	 * @private
 	 */
-	_drawGrid: function(chartArea) {
+	_drawGrid: function (chartArea) {
 		var me = this;
 		var gridLines = me.options.gridLines;
 
@@ -1297,7 +1297,7 @@ var Scale = Element.extend({
 	/**
 	 * @private
 	 */
-	_drawLabels: function() {
+	_drawLabels: function () {
 		var me = this;
 		var optionTicks = me.options.ticks;
 
@@ -1308,10 +1308,12 @@ var Scale = Element.extend({
 		var ctx = me.ctx;
 		var items = me._labelItems || (me._labelItems = me._computeLabelItems());
 		var i, j, ilen, jlen, item, tickFont, label, y;
-
+		var COLORS = ["transparent", "#F65353", "transparent", "transparent", "transparent", "#34D1EE", "transparent"];
 		for (i = 0, ilen = items.length; i < ilen; ++i) {
 			item = items[i];
 			tickFont = item.font;
+			tickFont.color = COLORS[i];
+			tickFont.font = 'bold 18px Noto Sans TC';
 
 			// Make sure we draw text in the correct color and font
 			ctx.save();
@@ -1340,7 +1342,7 @@ var Scale = Element.extend({
 	/**
 	 * @private
 	 */
-	_drawTitle: function() {
+	_drawTitle: function () {
 		var me = this;
 		var ctx = me.ctx;
 		var options = me.options;
@@ -1383,7 +1385,7 @@ var Scale = Element.extend({
 		ctx.restore();
 	},
 
-	draw: function(chartArea) {
+	draw: function (chartArea) {
 		var me = this;
 
 		if (!me._isVisible()) {
@@ -1398,7 +1400,7 @@ var Scale = Element.extend({
 	/**
 	 * @private
 	 */
-	_layers: function() {
+	_layers: function () {
 		var me = this;
 		var opts = me.options;
 		var tz = opts.ticks && opts.ticks.z || 0;
@@ -1408,7 +1410,7 @@ var Scale = Element.extend({
 			// backward compatibility: draw has been overridden by custom scale
 			return [{
 				z: tz,
-				draw: function() {
+				draw: function () {
 					me.draw.apply(me, arguments);
 				}
 			}];
@@ -1416,13 +1418,13 @@ var Scale = Element.extend({
 
 		return [{
 			z: gz,
-			draw: function() {
+			draw: function () {
 				me._drawGrid.apply(me, arguments);
 				me._drawTitle.apply(me, arguments);
 			}
 		}, {
 			z: tz,
-			draw: function() {
+			draw: function () {
 				me._drawLabels.apply(me, arguments);
 			}
 		}];
@@ -1431,11 +1433,11 @@ var Scale = Element.extend({
 	/**
 	 * @private
 	 */
-	_getMatchingVisibleMetas: function(type) {
+	_getMatchingVisibleMetas: function (type) {
 		var me = this;
 		var isHorizontal = me.isHorizontal();
 		return me.chart._getSortedVisibleDatasetMetas()
-			.filter(function(meta) {
+			.filter(function (meta) {
 				return (!type || meta.type === type)
 					&& (isHorizontal ? meta.xAxisID === me.id : meta.yAxisID === me.id);
 			});
